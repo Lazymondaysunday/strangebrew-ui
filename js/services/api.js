@@ -8,11 +8,11 @@ angular.module('brew')
 	        return {
 		    	status: function() {
 			    	//return	$http.get('/js/data.json?t=' + timestamp);
-			    	return $http.get(url + '/api/getstatus?_=' + timestamp);
+			    	return $http.get(url + '/getstatus?_=' + timestamp);
 			    },
 			    updatePID: function(data) {
 				    return $http({
-					   url: url + '/api/updatepid',
+					   url: url + '/updatepid',
 					   method: 'POST',
 					   data: $httpParamSerializerJQLike(data),
 					   headers: {
@@ -22,7 +22,7 @@ angular.module('brew')
 			    },
 			    toggleSwitch: function(data) {
 				    return $http({
-					   url: url + '/api/updateswitch',
+					   url: url + '/updateswitch',
 					   method: 'POST',
 					   data: $httpParamSerializerJQLike(data),
 					   headers: {
@@ -32,7 +32,7 @@ angular.module('brew')
 			    },
 			    toggleTimer: function(data) {
 				    return $http({
-					   url: url + '/api/toggletimer',
+					   url: url + '/toggletimer',
 					   method: 'POST',
 					   data: $httpParamSerializerJQLike(data),
 					   headers: {
