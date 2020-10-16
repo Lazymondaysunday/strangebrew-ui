@@ -1,16 +1,18 @@
 angular.module('brew')
     .factory('api', function ($http, $httpParamSerializerJQLike) {
         var timestamp = new Date().getTime();
-        var live = false;
+				var live = true;
+				var url = appConfig.API_URL;
+				console.log(url)
         if(live) {
 	        return {
 		    	status: function() {
 			    	//return	$http.get('/js/data.json?t=' + timestamp);
-			    	return $http.get('/api/getstatus?_=' + timestamp);
+			    	return $http.get(url + '/api/getstatus?_=' + timestamp);
 			    },
 			    updatePID: function(data) {
 				    return $http({
-					   url: '/api/updatepid',
+					   url: url + '/api/updatepid',
 					   method: 'POST',
 					   data: $httpParamSerializerJQLike(data),
 					   headers: {
@@ -20,7 +22,7 @@ angular.module('brew')
 			    },
 			    toggleSwitch: function(data) {
 				    return $http({
-					   url: '/api/updateswitch',
+					   url: url + '/api/updateswitch',
 					   method: 'POST',
 					   data: $httpParamSerializerJQLike(data),
 					   headers: {
@@ -30,7 +32,7 @@ angular.module('brew')
 			    },
 			    toggleTimer: function(data) {
 				    return $http({
-					   url: '/api/toggletimer',
+					   url: url + '/api/toggletimer',
 					   method: 'POST',
 					   data: $httpParamSerializerJQLike(data),
 					   headers: {
