@@ -1,0 +1,112 @@
+<div class="probes container-fluid">
+	<h4>Probes</h4>
+	<div class="row kettles">
+		<div class="col-md-4 kettle" ng-repeat="v in data.vessels track by $index" ng-hide="v.tempprobe.hidden">
+			<div class="panel panel-default vessel" ng-class="{'on': v.pidstatus.status != 'off' && v.pidstatus.status}">
+				<div class="panel-heading"><span class="status" ng-class="{'on': v.pidstatus.status != 'off'}" ng-show="v.pidstatus"></span> {{fixSpace(v.name)}}</div>
+				<div class="panel-body">
+					<h1 class="text-center">{{v.tempprobe.temp | formatTemperature: v.tempprobe.scale: true}} {{v.tempprobe.scale}}</h1>
+					<p class="current-mode" ng-show="v.pidstatus.mode">{{v.pidstatus.mode}} <span class="label label-success" ng-show="v.pidstatus.mode == 'auto'">{{v.pidstatus.setpoint | formatTemperature: v.tempprobe.scale: true}} {{v.tempprobe.scale}}</span></p>
+					<div class="progress" ng-show="v.pidstatus.mode == 'auto' || v.pidstatus.mode == 'manual' || v.pidstatus.mode == 'hysteria'">
+					  <div class="progress-bar"
+						  	  ng-class="{'progress-bar-success': v.pidstatus.duty <= 20, 'progress-bar-info': v.pidstatus.duty > 20, 'progress-bar-warning': v.pidstatus.duty > 60, 'progress-bar-danger': v.pidstatus.duty > 80}"
+							  	  role="progressbar"
+							  aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{v.pidstatus.actualduty}}%;">
+					    <span class="sr-only">{{v.pidstatus.actualduty}}%</span>
+
+					  </div>
+					</div>
+				</div>
+				<div class="panel-footer" ng-show="v.pidstatus">
+					<div class="btn-group">
+						<button type="button" ng-click="modeChange('off', v)" ng-class="{'active': v.pidstatus.mode == 'off'}" class="btn btn-default btn-lg"><span class="glyph-icon flaticon-power-button-off"></span><span class="text">Off</span></button>
+						<button type="button" ng-click="modeChange('auto', v)" ng-class="{'active': v.pidstatus.mode == 'auto'}" class="btn btn-default btn-lg"><span class="glyph-icon flaticon-flash"></span><span class="text">Auto</span></button>
+						<button type="button" ng-click="modeChange('manual', v)" ng-class="{'active': v.pidstatus.mode == 'manual'}" class="btn btn-default btn-lg"><span class="glyph-icon flaticon-letter-m"></span><span class="text">Manual</span></button>
+						<button type="button" ng-click="modeChange('hysteria', v)" ng-class="{'active': v.pidstatus.mode == 'hysteria'}" class="btn btn-default btn-lg"><span class="glyph-icon flaticon-wind"></span><span class="text">Hysteria</span></button>
+					</div>
+					<div class="data" ng-show="formData[v.deviceaddr].mode">
+						<div class="input-group item" ng-show="formData[v.deviceaddr].mode == 'auto'">
+							<input type="text" class="form-control input-lg" id="setpoint_input" placeholder="Setpoint" ng-model="formData[v.deviceaddr].setpoint">
+							<div class="input-group-addon input-group-addon-unit">°F</div>
+						</div>
+						<div class="manual" ng-show="formData[v.deviceaddr].mode == 'manual'">
+						   <div class="form-group">
+						      <label class="sr-only" for="cycletime_input">Cycle Time</label>
+						      <div class="input-group">
+						         <input type="text" class="form-control form-control-minwidth input-lg" id="cycletime_input" placeholder="Cycle Time" ng-model="formData[v.deviceaddr].cycletime">
+						         <div class="input-group-addon input-group-addon-unit">secs</div>
+						      </div>
+						   </div>
+						   <div class="form-group">
+						      <label class="sr-only" for="dutycycle_input">Cycle Time</label>
+						      <div class="input-group">
+						         <input type="text" class="form-control form-control-minwidth input-lg" id="dutycycle_input" placeholder="Duty Cycle" ng-model="formData[v.deviceaddr].dutycycle">
+						         <div class="input-group-addon input-group-addon-unit">%</div>
+						      </div>
+						   </div>
+						</div>
+						<div class="hysteresis" ng-show="formData[v.deviceaddr].mode == 'hysteria'">
+						   <div class="form-group">
+						      <label class="sr-only" for="min_input">Min</label>
+						      <div class="input-group">
+						         <input type="text" class="form-control form-control-minwidth input-lg" id="min_input" placeholder="Min" ng-model="formData[v.deviceaddr].min">
+						         <div class="input-group-addon input-group-addon-unit">°F</div>
+						      </div>
+						   </div>
+						   <div class="form-group">
+						      <label class="sr-only" for="max_input">Max</label>
+						      <div class="input-group">
+						         <input type="text" class="form-control form-control-minwidth input-lg" id="max_input" placeholder="Max" ng-model="formData[v.deviceaddr].max">
+						         <div class="input-group-addon input-group-addon-unit">°F</div>
+						      </div>
+						   </div>
+						   <div class="form-group">
+						      <label class="sr-only" for="time_input">Time</label>
+						      <div class="input-group">
+						         <input type="text" class="form-control form-control-minwidth input-lg" id="time_input" placeholder="Time" ng-model="formData[v.deviceaddr].time">
+						         <div class="input-group-addon input-group-addon-unit">Minutes</div>
+						      </div>
+						   </div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+							<on-screen-keyboard rows="[['1', '2', '3'],['4', '5', '6'], ['7', '8', '9'], ['0', '.', {type: 'erase', colspan: 1, text: '⇐'}]]"></on-screen-keyboard>
+							</div>
+							<div class="col-md-6">
+								<button class="btn btn-default btn-full btn-lg" ng-click="formData[v.deviceaddr] = ''">Cancel</button>
+							</div>
+							<div class="col-md-6">
+								<button class="btn btn-info btn-full btn-lg" ng-click="update()" id="update">Update</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div class="footer">
+	<div class="row">
+		<div class="pumps col-md-6 aux">
+			<h4>Timers</h4>
+			<div class="timer btn btn-default btn-lg hide" ng-click="toggleTimer()" ng-init="timer.mode == 'on' ? toggleTimer() : ''" ng-repeat="(key, timer) in data.timers">
+				{{key}}<span class="divider">
+				<timer interval="1000" countdown="(timer.durationms * 0.001) - (timer.elapsedms * 0.001)" autostart="false">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+				{{(timer.mode == 'on' ? true : false)}}
+			</div>
+			<div class="timer" ng-repeat="(key, timer) in data.timers">
+				<div class="btn btn-lg btn-default hide">{{(timer.durationms - timer.elapsedms) | formatTimer}}</div>
+				<timer class="btn-default btn btn-lg" ng-if="timer.mode == 'running'" interval="1000" countdown="(timer.durationms * 0.001) - (timer.elapsedms * 0.001)">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+				<timer class="btn-default btn btn-lg" ng-if="timer.mode == 'paused'" interval="1000" countdown="(timer.durationms * 0.001) - (timer.elapsedms * 0.001)" autostart>{{hhours}}:{{mminutes}}:{{sseconds}}</timer>								
+				<button class="btn-default btn-lg btn" ng-click="toggleTimer(key, 'toggle')">{{(timer.mode == 'running' ? 'Pause' : 'Start')}}</button>
+				<button class="btn-default btn-lg btn" ng-click="toggleTimer(key, 'reset')">Reset</button>
+			</div>
+		
+		</div>
+		<div class="timers col-md-6 aux">
+			<h4>Pumps</h4>
+			<button class="btn btn-lg btn-default" ng-class="{'active': switch}" ng-click="toggle(key)" ng-repeat="(key, switch) in data.switches">{{fixSpace(key)}} <span class="divider">{{switch ? "On" : "Off"}}</button>
+		</div>
+	</div>
+</div>

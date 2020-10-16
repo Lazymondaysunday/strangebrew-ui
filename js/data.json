@@ -1,0 +1,155 @@
+{
+  "timers": {
+    "Mash": {
+      "mode": "paused",
+      "invert": "false",
+      "position": -1,
+      "durationms": 3600000,
+      "elapsedms": 1140457
+    }
+  },
+  "switches": {
+    "Pump%202": true,
+    "Pump%201": false
+  },
+  "language": "en_US",
+  "locked": false,
+  "triggers": {
+    
+  },
+  "message": "No updates available!",
+  "breweryName": null,
+  "version": {
+    "date": "Sun May 29 10:56:15 2016 -0400\n",
+    "sha": "21c5e498f0d391270bb51050e22fa69601268757"
+  },
+  "vessels": [
+    {
+      "deviceaddr": "System",
+      "tempprobe": {
+        "elapsed": 1478335856097,
+        "temp": 115.772,
+        "hidden": true,
+        "size": 2,
+        "gravity": 1,
+        "scale": "F",
+        "cutoff": "-999",
+        "position": -1,
+        "cutoffEnabled": false,
+        "calibration": "0"
+      },
+      "name": "System"
+    },
+    {
+      "deviceaddr": "28-041661336cff",
+      "tempprobe": {
+        "elapsed": 1478335855106,
+        "temp": 105.9616,
+        "hidden": false,
+        "size": -1,
+        "gravity": 1,
+        "scale": "F",
+        "cutoff": "-999",
+        "position": -1,
+        "cutoffEnabled": false,
+        "calibration": "0"
+      },
+      "pidstatus": {
+        "heat": {
+          "p": 18,
+          "delay": 0,
+          "d": 0,
+          "i": 0,
+          "inverted": false,
+          "cycle": 2,
+          "gpio": "GPIO27"
+        },
+        "setpoint": 150,
+        "max": 0,
+        "cool": {
+          "p": 0,
+          "delay": 0,
+          "d": 0,
+          "i": 0,
+          "inverted": false,
+          "cycle": 0,
+          "gpio": ""
+        },
+        "manualduty": 0,
+        "manualtime": 0,
+        "mode": "auto",
+        "min": 0,
+        "actualduty": 50,
+        "duty": 50,
+        "time": 0,
+        "status": "heating"
+      },
+      "name": "Boil%20Kettle"
+    },
+    {
+      "deviceaddr": "28-04166134e8ff",
+      "tempprobe": {
+        "elapsed": 1478335855056,
+        "temp": 73.625,
+        "hidden": false,
+        "size": -1,
+        "gravity": 1,
+        "scale": "F",
+        "cutoff": "-999",
+        "position": -1,
+        "cutoffEnabled": false,
+        "calibration": "0"
+      },
+      "name": "Mash%20Tun"
+    },
+    {
+      "deviceaddr": "28-031660898bff",
+      "tempprobe": {
+        "elapsed": 1478335855506,
+        "temp": 73.9616,
+        "hidden": false,
+        "size": -1,
+        "gravity": 1,
+        "scale": "F",
+        "cutoff": "-999",
+        "position": -1,
+        "cutoffEnabled": false,
+        "calibration": "0"
+      },
+      "pidstatus": {
+        "mode": "off",
+        "heat": {
+          "p": 18,
+          "delay": 0,
+          "d": 0,
+          "i": 0,
+          "inverted": false,
+          "cycle": 2,
+          "gpio": "GPIO17"
+        },
+        "setpoint": 150,
+        "min": 0,
+        "max": 0,
+        "cool": {
+          "p": 0,
+          "delay": 0,
+          "d": 0,
+          "i": 0,
+          "inverted": false,
+          "cycle": 0,
+          "gpio": ""
+        },
+        "manualduty": 0,
+        "manualtime": 0,
+        "actualduty": 0,
+        "duty": 100,
+        "time": 0,
+        "status": "off"
+      },
+      "name": "HLT"
+    }
+  ],
+  "notifications": [
+    
+  ]
+}

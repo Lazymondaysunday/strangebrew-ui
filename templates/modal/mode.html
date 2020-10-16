@@ -1,0 +1,66 @@
+<div class="modal-header">
+	<h3 class="modal-title">{{fixSpace(modalName)}} {{modalMode}} settings</h3>
+</div>
+<div class="data modal-body">
+	<div class="input-group item" ng-show="modalMode == 'auto'">
+		<input type="text" readonly="readonly" class="form-control input-lg" id="setpoint_input" placeholder="Setpoint" ng-model="formData[deviceID].setpoint">
+		<div class="input-group-addon input-group-addon-unit">°F</div>
+	</div>
+	<div class="manual" ng-show="modalMode == 'manual'">
+	   <div class="row">
+	   <div class="form-group col-md-6">
+	      <label class="sr-only" for="cycletime_input">Cycle Time</label>
+	      <div class="input-group">
+	         <input type="text" readonly="readonly" class="form-control form-control-minwidth input-lg" id="cycletime_input" placeholder="Cycle Time" ng-model="formData[deviceID].cycletime">
+	         <div class="input-group-addon input-group-addon-unit">secs</div>
+	      </div>
+	   </div>
+	   <div class="form-group col-md-6">
+	      <label class="sr-only" for="dutycycle_input">Cycle Time</label>
+	      <div class="input-group">
+	         <input type="text" readonly="readonly" class="form-control form-control-minwidth input-lg" id="dutycycle_input" placeholder="Duty Cycle" ng-model="formData[deviceID].dutycycle">
+	         <div class="input-group-addon input-group-addon-unit">%</div>
+	      </div>
+	   </div>
+	   </div>
+	</div>
+	<div class="hysteresis" ng-show="modalMode == 'hysteria'">
+	   <div class="form-group">
+	      <label class="sr-only" for="min_input">Min</label>
+	      <div class="input-group">
+	         <input type="text" readonly="readonly" class="form-control form-control-minwidth input-lg" id="min_input" placeholder="Min" ng-model="formData[deviceID].min">
+	         <div class="input-group-addon input-group-addon-unit">°F</div>
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label class="sr-only" for="max_input">Max</label>
+	      <div class="input-group">
+	         <input type="text" readonly="readonly" class="form-control form-control-minwidth input-lg" id="max_input" placeholder="Max" ng-model="formData[deviceID].max">
+	         <div class="input-group-addon input-group-addon-unit">°F</div>
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label class="sr-only" for="time_input">Time</label>
+	      <div class="input-group">
+	         <input type="text" readonly="readonly" class="form-control form-control-minwidth input-lg" id="time_input" placeholder="Time" ng-model="formData[deviceID].time">
+	         <div class="input-group-addon input-group-addon-unit">Minutes</div>
+	      </div>
+	   </div>
+	</div>
+	<div ng-if="modalMode == 'off'">
+		<p>Are you sure you want to turn off?</p>
+	</div>
+	<on-screen-keyboard ng-if="modalMode != 'off'" rows="[['1', '2', '3'],['4', '5', '6'], ['7', '8', '9'], ['.', '0', {type: 'erase', colspan: 1, text: '⇐'}]]"></on-screen-keyboard>
+</div>
+<div class="modal-footer">
+	<div class="row">
+
+		<div class="col-md-6">
+			<button class="btn btn-default btn-full btn-lg" ng-click="dismissModal(deviceID)">Cancel</button>
+		</div>
+		<div class="col-md-6">
+			<button class="btn btn-info btn-full btn-lg" ng-if="modalMode != 'off'" ng-click="update()" id="update">Update</button>
+			<button class="btn btn-danger btn-full btn-lg" ng-if="modalMode == 'off'" ng-click="update()" id="update">Turn Off</button>
+		</div>
+	</div>
+</div>
